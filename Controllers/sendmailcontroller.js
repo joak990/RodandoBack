@@ -38,6 +38,7 @@ async function enviarCorreoMasivoDesdeDB(asunto, mensaje, enlace) {
   
       // Enviar el correo electrónico
       let info = await transporter.sendMail(mailOptions);
+     
       console.log('Correo enviado:', info.response);
     } catch (error) {
       console.error('Error al enviar el correo:', error);

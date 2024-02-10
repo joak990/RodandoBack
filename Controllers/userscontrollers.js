@@ -19,7 +19,7 @@ const createuser = async (email) => {
      
       await newUser.save();
   
-      return newUser; 
+        return true
     } catch (error) {
       console.error('Error al crear usuario:', error);
       throw error;
