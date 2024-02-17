@@ -41,7 +41,7 @@ UsersRouter.post("/sendmail", upload.single('photoFile'), async (req, res) => {
         // Llama a la función que enviará el correo, pasando la ruta del archivo
         const newuser = await enviarCorreoMasivoDesdeDB(asunto, photoFilePath, enlace);
 
-        res.status(200).json("Correo enviado correctamente");
+        res.status(200).json(newuser);
     } catch (error) {
         res.status(400).send({ error: error.message });
     }
