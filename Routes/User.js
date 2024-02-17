@@ -33,12 +33,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage }); // Crea el middleware de multer con la configuración de almacenamiento
 
-UsersRouter.post("/sendmail", upload.single('photoFile'), async (req, res) => {
+UsersRouter.post("/sendmail", async (req, res) => {
     try {
         const { asunto, enlace } = req.body;
-        const photoFilePath = req.file.path; // Ruta del archivo adjunto
+      
          console.log(asunto,enlace,"body");
-        console.log(photoFilePath,"foto");
+       
         // Llama a la función que enviará el correo, pasando la ruta del archivo
         //const newuser = await enviarCorreoMasivoDesdeDB(asunto, photoFilePath, enlace);
          
