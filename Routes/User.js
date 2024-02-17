@@ -2,7 +2,8 @@ const express = require('express');
 const UsersRouter = express.Router();
 const enviarCorreoMasivoDesdeDB = require('../Controllers/sendmailcontroller');
 const createuser = require('../Controllers/userscontrollers');
-
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' })
 
 UsersRouter.post("/users", async (req,res) => {
     try {
@@ -19,19 +20,7 @@ UsersRouter.post("/users", async (req,res) => {
 
 
 
-const multer = require('multer'); // Importa multer para manejar archivos
 
-// Configura multer para guardar los archivos en una ubicación específica
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads'); // La carpeta "uploads" debe existir en tu proyecto
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname); // Renombra el archivo con un nombre único
-  }
-});
-
-const upload = multer({ storage: storage }); // Crea el middleware de multer con la configuración de almacenamiento
 
 UsersRouter.post("/sendmail", upload.single('photoFile'), async (req, res) => {
     try {
@@ -40,9 +29,9 @@ UsersRouter.post("/sendmail", upload.single('photoFile'), async (req, res) => {
          console.log(asunto,enlace,"body");
         console.log(photoFilePath,"foto");
         // Llama a la función que enviará el correo, pasando la ruta del archivo
-        //const newuser = await enviarCorreoMasivoDesdeDB(asunto, photoFilePath, enlace);
+        const newuser = await enviarCorreoMasivoDesdeDB(asunto, photoFilePath, enlace);
          
-        res.status(200).json("newuser");
+        res.status(200).json(newuser);
     } catch (error) {
         res.status(400).send({ error: error.message });
     }
